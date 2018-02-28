@@ -1,0 +1,122 @@
+<!-- 新增功能页面 -->
+<div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs font-green-sharp"></i>
+            <span class="caption-subject font-green-sharp bold uppercase" ng-if="!id">新增功能</span>
+            <span class="caption-subject font-green-sharp bold uppercase" ng-if="id">编辑功能</span>
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="remove" ng-click="cancel()">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body portlet light">
+        <form action="#" name="myform" class="form-horizontal ">
+            <div class="form-body ">
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">功能名称<span  ng-class="{required:myform.dict_key.$invalid}"  >* </span></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"
+                                   ng-model="appFrom.funcName" required  maxlength="128"
+                                   name="dict_key" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">功能编号 <span ng-class="{required:myform.dict_key1.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <input type="text"  class="form-control"
+                                   ng-model="appFrom.funcCode" required  maxlength="64"
+                                   name="dict_key1" />
+                            <span style="color: #ccc">请输入功能编码,建议使用数字和字母组合</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">功能类型</label>
+                            <div class="col-md-8" ng-init="$settings.getDictData('DICT_AC_FUNCTYPE')">
+                                <select class="form-control" name="dict_open" ng-model="appFrom.funcType" maxlength="255">
+                                    <option ng-repeat="d in $settings.diclist['DICT_AC_FUNCTYPE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                </select>
+                            </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">行为类型</label>
+                        <div class="col-md-8" ng-init="$settings.getCommData('BHVTYPE')">
+                            <select class="form-control" name="dict_open" ng-model="appFrom.guidBhvtypeDef" maxlength="255">
+                                <option ng-repeat="d in $settings.commlist['BHVTYPE'] track by $index" value="{{d.guid}}">{{d.bhvtypeName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">是否定义为菜单</label>
+                        <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
+                            <select class="form-control" name="dict_open" ng-model="appFrom.ismenu">
+                                <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label class="control-label col-md-4">是否验证权限</label>
+                        <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
+                            <select class="form-control" name="dict_open" ng-model="appFrom.ischeck">
+                                <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" >
+                    <div class="form-group">
+                        <label class="control-label col-md-2">功能调用入口</label>
+                        <div class="col-md-10">
+                        <input type="text" class="form-control"
+                               ng-model="appFrom.funcAction"
+                               name="id" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" >
+                    <div class="form-group">
+                        <label class="control-label col-md-2">输入参数</label>
+                        <div class="col-md-10">
+                        <input type="text" class="form-control"
+                               ng-model="appFrom.paraInfo"  maxlength="256"
+                               name="id" />
+                            <span style="color:#ccc">定义参数规范</span>
+                         </div>
+                    </div>
+                </div>
+                <div class="col-md-12" >
+                    <div class="form-group">
+                        <label class="control-label col-md-2">功能描述</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control"
+                                   ng-model="appFrom.funcDesc" maxlength="512"
+                                   name="id" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 col-md-offset-10">
+                    <div class="actions btn-set">
+                        <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="add(appFrom)" > 保存
+                        </button>
+                        <button type="button" name="back" class="btn default" ng-if="myform.$invalid == true"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" > 保存
+                        </button>
+                        <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

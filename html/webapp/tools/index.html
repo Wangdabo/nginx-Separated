@@ -1,0 +1,378 @@
+
+<!DOCTYPE html>
+<!--
+Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.6
+Version: 4.5.6
+-->
+<!--[if IE 8]>
+<html lang="en" class="ie8 no-js" data-ng-app="MetronicApp"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9 no-js" data-ng-app="MetronicApp"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="zh" data-ng-app="MetronicApp">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <title data-ng-bind="'TIS | ' + $state.current.data.pageTitle"></title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="assets/global/plugins/googleapis/css/fonts-googleapis.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN DYMANICLY LOADED CSS FILES(all plugin and page related styles must be loaded between GLOBAL and THEME css files ) -->
+    <link id="ng_load_plugins_before"/>
+    <!-- END DYMANICLY LOADED CSS FILES -->
+    <!-- 图标管理引用-->
+    <link rel="stylesheet" href="assets/global/plugins/ui-iconpicker-master/dist/styles/ui-iconpicker.min.css"/>
+    <!-- BEGIN THEME STYLES -->
+    <!-- DOC: To use 'rounded corners' style just load 'components-rounded.css' stylesheet instead of 'components.css' in the below style tag -->
+    <link href="assets/global/css/components.min.css" id="style_components" rel="stylesheet" type="text/css" />
+    <link href="assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+    <link  href="assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
+    <link  href="assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color1" />
+    <link  href="assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <link  href="assets/layouts/layout/css/timeline-old.css" rel="stylesheet" type="text/css" />
+    <!-- END THEME STYLES -->
+    <link rel="shortcut icon" href="favicon.ico" />
+
+    <!-- BEGIN PROJECT  CSS-->
+    <link href="css/fenye.css" rel="stylesheet" type="text/css"/>
+    <link href="css/ServiceJournal.css" rel="stylesheet" type="text/css"/>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+
+<body ng-controller="AppController"
+      class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-sidebar-closed-hide-logo page-on-load page-sidebar-fixed"
+      ng-class="{'page-sidebar-closed': settings.layout.pageSidebarClosed}">
+<!-- BEGIN PAGE SPINNER -->
+<div ng-spinner-bar class="page-spinner-bar">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+</div>
+
+
+<div  data-ng-include="'tpl/header.html'"   class="page-header navbar navbar-fixed-top"></div>
+
+<div  class="clearfix"></div>
+
+<div  class="page-container">
+    <div data-ng-include="'tpl/sidebar.html'"  class="page-sidebar-wrapper"></div>
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <div ui-view class="fade-in-up"></div>
+        </div>
+    </div>
+    <a href="javascript:;" class="page-quick-sidebar-toggler">
+        <i class="icon-login"></i>
+    </a>
+    <div data-ng-include="'tpl/quick-sidebar.html'" data-ng-controller="QuickSidebarController" class="page-quick-sidebar-wrapper"></div>
+</div>
+<div  data-ng-include="'tpl/footer.html'" data-ng-controller="FooterController" class="page-footer" ></div>
+
+<!--应用程序所用，写在依赖之前，解决引用不到压缩包问题-->
+<!-- Insert this line above script imports  -->
+<script>
+    if (typeof module === 'object') {window.module = module; module = undefined;}
+</script>
+
+<!-- END FOOTER -->
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE JQUERY PLUGINS -->
+<!--[if lt IE 9]>
+<script src="../assets/global/plugins/respond.min.js"></script>
+<script src="../assets/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+<script src="assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+<!--flowchart -->
+<!--<script src="js/customer/raphael-min.js" type="text/javascript"></script>
+<script src="js/customer/flowchart.min.js" type="text/javascript"></script>-->
+
+<script src="assets/global/plugins/moment.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"
+        type="text/javascript"></script>
+<script src="assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<!-- END CORE JQUERY PLUGINS -->
+<!-- BEGIN CORE ANGULARJS PLUGINS -->
+<script src="assets/global/plugins/angularjs/angular.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/angularjs/angular-sanitize.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/angularjs/angular-touch.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/angularjs/plugins/angular-ui-router.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/angularjs/plugins/ocLazyLoad.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/angularjs/plugins/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
+
+<script src="assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js" type="text/javascript"></script>
+<script src="assets/global/plugins/angularjs/plugins/angular-file-upload/angular-file-upload.min.js" type="text/javascript"></script>
+
+<!-- END CORE ANGULARJS PLUGINS -->
+<script src="assets/global/plugins/highcharts/js/highcharts.js" type="text/javascript"></script>
+
+<!-- END PROJECT CSS -->
+
+<!-- BEGIN PROJECT GLOBAL JS-->
+
+<script src="js/main.js" type="text/javascript"></script>
+<script src="js/filter.js" type="text/javascript"></script>
+<script src="js/directives.js" type="text/javascript"></script>
+<!--表单验证自定义指令-->
+<script src="js/directive/translate.js"></script>
+<script src="js/directive/Directive.js" type="text/javascript"></script>
+<script src="js/scripts/global.js"></script>
+<!-- END PROJECT GLOBAL JS-->
+<!--权限控制自定义指令-->
+<script src="js/directive/funActive.js"></script>
+<!--权限控制自定义指令-->
+<!--<script src="https://cdn.bootcss.com/rxjs/5.4.2/Rx.min.js"></script>-->
+<script src="assets/global/plugins/RXjs/Rx.min.js"></script>
+<!-- BEGIN PROJECT OTHER JS-->
+
+<!--zhushi -->
+<script src="assets/global/plugins/ui-iconpicker-master/dist/scripts/ui-iconpicker.min.js"></script>
+<!--common start-->
+
+<script src="js/controllers/common/commonCaller_controller.js" type="text/javascript"></script>
+<script src="js/service/common/commonCaller_service.js" type="text/javascript"></script>
+<!--common end-->
+<!--公用服务方法-->
+<script src="js/service/commin.js"></script>
+<!--org start-->
+<script src="js/controllers/org/Abftree_Controller.js" type="text/javascript"></script>
+<script src="js/service/org/abftree_service.js" type="text/javascript"></script>
+<!--org end-->
+<!-- emp start -->
+<script src="js/controllers/emp/Emp_controller.js" type="text/javascript"></script>
+<script src="js/service/Emp/Emp_service.js" type="text/javascript"></script>
+<!-- emp end -->
+<!-- Busiorg start -->
+<script src="js/controllers/busiorg/busiorg_Controller.js" type="text/javascript"></script>
+<script src="js/service/busiorg/busiorg_service.js" type="text/javascript"></script>
+<!-- Busiorg end -->
+<!-- workgroup start -->
+<script src="js/controllers/Workgroup/Workgroup_controller.js" type="text/javascript"></script>
+<script src="js/service/Workgroup/Workgroup_service.js" type="text/javascript"></script>
+<!-- workgroup end -->
+<!--错误异常controller-->
+<script src="./js/controllers/errorInfo/errorInfo.js"></script>
+
+
+<!--lodash -->
+<script src="assets/global/plugins/lodash/lodash.min.js"></script>
+
+<!-- duty start -->
+<script src="js/controllers/duty/duty_Controller.js" type="text/javascript"></script>
+<script src="js/service/duty/duty_service.js" type="text/javascript"></script>
+<!-- duty end -->
+
+<!--Jurisdiction start-->
+<script src="assets/global/plugins/moment.min.js" type="text/javascript"></script>
+<script src="js/controllers/Jurisdiction/application_Controller.js"></script>
+<script src="js/service/Jurisdiction/application_service.js"></script>
+<script src="js/controllers/Management/menu_Controller.js"></script>
+<script src="js/service/Management/menu_service.js"></script>
+<script src="js/controllers/roleManage/role_controller.js"></script>
+<script src="js/service/roleManage/role_service.js"></script>
+<!--Jurisdiction end-->
+<!--操作员管理  start-->
+<script src="js/controllers/operator/opmeController.js"></script>
+<script src="js/service/operator/operator_service.js"></script>
+<!--操作员管理  end-->
+<!--操作员个性化配置 start-->
+<script src="js/controllers/operator/oprconfigController.js"></script>
+<!--操作员个性化配置 end-->
+<!-- 操作员快捷菜单-->
+<script src="js/controllers/shortcutMenu/shortcutMenu_Controller.js"></script>
+<!-- 操作员快捷菜单-->
+<!--behavior start-->
+<script src="js/controllers/behavior/behaviorController.js"></script>
+<script src="js/service/behavior/behavior_service.js"></script>
+<!--behavior end-->
+<!--业务字典-->
+<script src="js/controllers/dictionary/dictionaryController.js"></script>
+<script src="js/service/dictonary/dictonary_service.js"></script>
+<!--序列表-->
+<script src="js/controllers/numberResources/numresController.js"></script>
+<script src="js/service/numres/numres_service.js"></script>
+<!--系统运行参数start-->
+<script src="js/controllers/Systempara/Systempara_controller.js"></script>
+<script src="js/service/Systempara/Systempara_service.js"></script>
+<!--系统运行参数end-->
+<!--定时器start-->
+<script src="js/controllers/transtime/transtimer.js"></script>
+<!--定时器end-->
+<!--jstree start-->
+<!--lengthlimit限制-->
+<script src="js/directive/Lengthlimit.js"></script>
+<script src="assets/global/plugins/jstree/dist/jstree.js" type="text/javascript"></script>
+<link href="assets/global/plugins/jstree/dist/themes/default/style.min.css" rel="stylesheet" type="text/css"/>
+<!--jstree end-->
+<!--日志页面-->
+<script src="js/controllers/journal/journallog.js"></script>
+<!--日志页面-->
+<!--操作员功能行为配置页面  start-->
+<script src="js/controllers/permission/permission_controller.js"></script>
+<!--操作员功能行为配置页面 end-->
+
+<!-- select start -->
+<script src="assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js" type="text/javascript"></script>
+<link href="assets/global/plugins/jquery-multi-select/css/multi-select.css" rel="stylesheet" type="text/css"/>
+<!-- select end -->
+<!--个性配置功能页面-->
+<script src="js/controllers/configuration/configuration.js"></script>
+<!--个性配置功能页面-->
+
+<!-- 数据实体页面-->
+<script src="js/controllers/DataEntity/Dataentity_controller.js"></script>
+<!-- 数据实体页面-->
+<!--ui-grid start-->
+<link rel="stylesheet" href="assets/global/plugins/angular-ui-grid/ui-grid.min.css"/>
+<!--源代码修改ng-show条件，不显示下方行数-->
+<script src="assets/global/plugins/angular-ui-grid/ui-grid.min.js"></script>
+<!--<script src=""></script>-->
+
+<!--ui-grid end-->
+
+<!--biztrace start-->
+<script src="js/controllers/biztrace/biztraceHandleController.js" type="text/javascript"></script>
+<script src="js/service/biztrace/biztraceHandle.js"></script>
+<script src="js/controllers/biztrace/biztraceQueryController.js" type="text/javascript"></script>
+<script src="js/service/biztrace/biztraceQuery.js"></script>
+<script src="js/controllers/biztrace/biztraceSumQueryController.js" type="text/javascript"></script>
+<script src="js/service/biztrace/biztraceSumQuery.js"></script>
+<script src="js/controllers/biztrace/redisCleanController.js" type="text/javascript"></script>
+<script src="js/service/biztrace/redisClean.js"></script>
+
+
+<script src="js/directive/drop.js"></script>
+<!--biztrace end-->
+<!--lpc start-->
+<script src="js/controllers/LPC/ListCheckController.js" type="text/javascript"></script>
+<script src="js/service/LPC/ListCheck.js"></script>
+<script src="js/controllers/LPC/FeatureRegController.js" type="text/javascript"></script>
+<script src="js/service/LPC/FeatureReg.js"></script>
+<script src="js/service/pagination_service.js"></script>
+<!--lpc end-->
+<!-- BEGIN APP LEVEL JQUERY SCRIPTS -->
+<script src="assets/global/scripts/app.min.js" type="text/javascript"></script>
+<script src="assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+
+<script src="assets/layouts/layout4/scripts/layout.js" type="text/javascript"></script>
+<!--主题切换js 开始-->
+<script src="assets/layouts/layout4/scripts/demo.min.js" type="text/javascript"></script>
+<!--<script src="../assets/layouts/layout4/scripts/demo.js"></script>-->
+<!--主题切换js  结束-->
+<!-- END APP LEVEL JQUERY SCRIPTS -->
+<!-- END JAVASCRIPTS -->
+
+<!--select2-->
+<link href="assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css">
+<link href="assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css">
+<script src="assets/global/plugins/select2/js/select2.js" type="text/javascript"></script>
+
+
+<!--测试菜单无限循环-->
+<script src="js/directive/testrepeat.js"></script>
+
+<!-- END APP LEVEL JQUERY SCRIPTS -->
+<!-- END JAVASCRIPTS -->
+<style type="text/css">
+    .lanmo-warning {
+        border-color: #aa1100
+    }
+
+    .lanmo-error {
+        color: #ebccd1
+    }
+
+    .lm_window_head {
+        height: 25px;
+        padding: 2px 8px 2px 8px;
+    }
+
+    .lm_window_head .p1 {
+        float: left;
+        height: 20px;
+        margin: 0 0
+    }
+
+    .lm_window_head .p2 {
+        float: right;
+        height: 20px;;
+        margin: 0 0
+    }
+
+    .lm_window_footer {
+        height: 30px;
+        padding: 2px 8px 2px 8px;
+    }
+</style>
+
+<link href="assets/global/plugins/clockface/css/clockface.css" rel="stylesheet" type="text/css"/>
+<link href="assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css"/>
+<link href="assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css"/>
+<link href="assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css" rel="stylesheet" type="text/css"/>
+<link href="assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-toastr/toastr.min.css"/>
+<script src="assets/global/scripts/metronic.js" type="text/javascript"></script>
+
+<script src="assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/clockface/js/clockface.js" type="text/javascript"></script>
+<script src="assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"
+        type="text/javascript"></script>
+<script src="assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"
+        type="text/javascript"></script>
+<script src="assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"
+        type="text/javascript"></script>
+<script src="assets/pages/scripts/components-date-time-pickers.js" type="text/javascript"></script>
+<script src="assets/global/plugins/bootstrap-toastr/toastr.min.js"></script>
+
+<!--应用程序所用写在依赖之后，防止找不到对应的依赖-->
+<!-- Insert this line after script imports -->
+<script>if (window.module) module = window.module;</script>
+
+<!--<script type="text/javascript">
+
+    $(function () { $("[data-toggle='tooltip']").tooltip(); });
+
+    /* Init Metronic's core jquery plugins and layout scripts */
+    $(document).ready(function() {
+        Metronic.init(); // Run metronic theme
+        Metronic.setAssetsPath('assets/'); // Set the assets folder path
+    });
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "positionClass": "toast-top-right",
+        "onclick": null,
+        "showDuration": "1000",
+        "hideDuration": "1000",
+        "timeOut": "3000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+</script>-->
+
+
+
+</body>
+<!-- END BODY -->
+
+</html>

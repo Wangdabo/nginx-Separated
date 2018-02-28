@@ -1,0 +1,183 @@
+<!--数据实体范围权限页面-->
+<div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
+    <div class="portlet-title">
+        <div class="caption">
+            <span class="caption-subject font-green-sharp bold uppercase">{{title}}</span>
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="remove" ng-click="cancel()">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body portlet light">
+        <form action="#" name="myform" class="form-horizontal ">
+            <div class="form-body ">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">数据范围权限名称:<span ng-class="{required:myform.privName.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" ng-model="dataEntFrom.privName" required  name="privName" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4"> 数据操作类型:<span ng-class="{required:myform.dataOpType.$invalid}"  > * </span></label>
+                        <div class="col-md-8" ng-init="$settings.getDictData('DICT_AC_DATAOPTYPE')">
+                            <select class="form-control" required  name="dataOpType"  ng-model="dataEntFrom.dataOpType" style="width: 100%">
+                                <!--<option ng-repeat="x in dictlist" value="{{x.guid}}">{{x.dictKey+'-&#45;&#45;'+x.dictName}}</option>-->
+                                <option ng-repeat="d in $settings.diclist['DICT_AC_DATAOPTYPE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">实体名称:<span ng-class="{required:myform.entityName.$invalid}"  > * </span></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" ng-model="dataEntFrom.entityName"  required name="entityName"/>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-2">过滤SQL:</label>
+                        <div class="col-md-8">
+                            &lt;!&ndash;因为无法监控到数组，所以使用angular 的管道，在filter.js中定义tdCondStr来处理函数&ndash;&gt;
+                            <textarea class="form-control" readonly>{{ dataEnt.cardArray | toRangeStr}}</textarea>
+                        </div>
+                    </div>
+                </div>-->
+                <div class="portlet light"  style="width: 100%;height:100%;overflow-x: hidden;">
+                    <form name="myform">
+                        <div>
+                            <div class="modal-header" style="padding-top: 10px;padding-bottom: 10px">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="ENtitycancel()">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <h4 class="modal-title" style="margin-top: 4px">高级查询</h4>
+                            </div>
+                        </div>
+                        <div class="form-body" style="padding: 0 100px;">
+                            <div class="row" style="margin-top:40px;" >
+                                {{dataEnt.cardArray}}
+                                <div class="col-md-12"  ng-repeat="d in dataEnt.cardArray"  ng-init="outerIndex = $index">
+                                    <div class="portlet light clearfix" style="border:1px solid #ccc">
+                                        <div class="portlet-body form" >
+                                            <div class="col-md-12">
+                                                <div class="col-md-2">关系符</div>
+                                                <div class="col-md-2">字段</div>
+                                                <div class="col-md-2">逻辑符</div>
+                                                <div class="col-md-4">条件值</div>
+                                                <div class="col-md-2">编辑</div>
+                                                <div class="col-md-12" style="border-bottom: 1px solid #ccc;margin-top:5px;">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12" style="margin:10px 0px;" ng-repeat="dd in d track by $index"  >
+                                                <div class="col-md-2" ng-if="$index>0">
+                                                    <select class="form-control" ng-model="dd.rlea"  ng-init="dd.rlea='and'">
+                                                        <option value="||">或者</option>
+                                                        <option value="&&">并且</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-2" ng-if="$index == 0">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <select class="form-control" ng-model="dd.type">
+                                                        <option ng-repeat="d in EntiDates track by $index" value="{{d.value}}">{{d.key}}</option>
+                                                    </select>
+                                                </div>
+                                                <!--关系符页面-->
+                                                <div class="col-md-2">
+                                                    <!--字符串类型-->
+                                                    <select class="form-control" ng-if="dd.type == 'string'" ng-model="dd.guanxi" ng-init="dd.guanxi='like'">
+                                                        <option value="like">包含</option>
+                                                        <option value="nlk">不包含</option>
+                                                        <option value="eq">等于</option>
+                                                        <option value="neq">不等于</option>
+                                                    </select>
+                                                    <!--小数类型/数值类型-->
+                                                    <select  class="form-control" ng-if="dd.type == 'Int'||dd.type=='Decimal'" ng-model="dd.guanxi">
+                                                        <option value="=">等于</option>
+                                                        <option value="!=">不等于</option>
+                                                        <option value=">">大于</option>
+                                                        <option value=">=">大于等于</option>
+                                                        <option value="<">小于</option>
+                                                        <option value="<=">小于等于</option>
+                                                    </select>
+                                                    <!--时间类型-->
+                                                    <select  class="form-control"  ng-if="dd.type == 'Date'" ng-model="dd.guanxi">
+                                                        <option value="start">起于</option>
+                                                        <option value="end">止于</option>
+                                                    </select>
+                                                    <!--<select  class="form-control" ng-if="dd.type == 'quote'" ng-model="dd.guanxi">
+                                                        <option value="=">等于</option>
+                                                        <option value="!=">不等于</option>
+                                                    </select>-->
+                                                    <!--引用类型-->
+                                                    <select class="form-control"  ng-if="dd.type == undefined">
+                                                    </select>
+                                                </div>
+                                                <!--关系页面-->
+                                                <div class="col-md-3">
+                                                    <!--文本框-->
+                                                    <div style="text-align: left;"   ng-if="dd.type !== 'Date'">
+                                                        <input type="text"  class="form-control"  ng-model="dd.ce">
+                                                    </div>
+                                                    <div style="text-align: left;"   ng-if="dd.type == 'Date'">
+                                                        <div class="input-group date form_datetime" ng-init="$root.settings.utils.initpicker()"  >
+                                                                            <span class="input-group-btn">
+                                                                                <button class="btn default date-set"  type="button"><i  class="fa fa-calendar"></i></button>
+                                                                            </span>
+                                                            <input type="text" class="form-control" class="col-md-4" ng-model="dd.ce" readonly/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <button  ng-click="addQualityRatingExt($parent.$index)" class="btn btn-icon-only green"><i class="fa fa-plus"></i></button>
+                                                    <button ng-if="d.length>1"  ng-click="delQualityRatingExt(d,$index)" class="btn btn-icon-only green"><i class="fa fa-minus"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-of"  style="margin-bottom: 20px;">
+                                        <div class="row">
+                                            <div class="col-md-2 col-md-offset-5" ng-if="dataEnt.cardArray.length>$index+1">
+                                                <select  class="form-control"    required  ng-change="selectchange(d.orAdd)"  ng-model="d.orAdd" ng-init="d.orAdd='and'">
+                                                    <option value="||">或者</option>
+                                                    <option value="&&">并且</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2 col-md-offset-3" ng-if="dataEnt.cardArray.length<=$index+1">
+                                            </div>
+                                            <div class="col-md-1">
+                                                <a ng-if="dataEnt.cardArray.length == $index+1" href ng-click="cardaddQualityRatingExt(d)" class="btn btn-icon-only green col-md-5"><i class="fa fa-plus"></i></a>
+                                                <a ng-if="dataEnt.cardArray.length > $index+1"  href ng-click="carddelQualityRatingExt($index+1)" class="btn btn-icon-only green col-md-5"><i class="fa fa-minus"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-2"></label>
+                        <div class="col-md-10">
+                            <div class="actions btn-set" style="float: right;">
+                                <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="add(dataEntFrom)" > 保存
+                                </button>
+                                <button type="button" name="back" class="btn default" ng-if="myform.$invalid == true"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" > 保存
+                                </button>
+                                <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

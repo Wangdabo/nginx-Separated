@@ -1,0 +1,51 @@
+<div class="page-sidebar navbar-collapse collapse">
+    <ul class="page-sidebar-menu ids1" test-repeats ng-if="!issearchmenu"  comtasssble=menusAndTrans  ng-model="menusAndTrans" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" ng-class="{'page-sidebar-menu-closed': settings.layout.pageSidebarClosed}">
+        <li class="sidebar-search-wrapper">
+            <form class="sidebar-search sidebar-search-bordered" action="#" method="POST">
+                <a href="javascript:;" class="remove">
+                    <i class="icon-close"></i>
+                </a>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search..." ng-model="searchParam" ng-change = test(searchParam)>
+                    <span class="input-group-btn">
+                        <span class="btn" ng-click = "search(searchParam)">
+                            <i  class="icon-magnifier"></i>
+                        </span>
+                    </span>
+                </div>
+            </form>
+        </li>
+        <li class="start nav-item">
+            <a href="#/dashboard">
+                <i class="icon-home"></i>
+                <span class="title">首页</span>
+            </a>
+        </li>
+    </ul>
+
+
+    <!-- 搜索还未做-->
+    <ul class="page-sidebar-menu search1" ng-if="issearchmenu"  test-repeats  comtasssble=menusAndTrans  ng-model="menusAndTrans" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" ng-class="{'page-sidebar-menu-closed': settings.layout.pageSidebarClosed}">
+         <li class="sidebar-search-wrapper">
+             <form class="sidebar-search sidebar-search-bordered" action="#" method="POST">
+                 <a href="javascript:;" class="remove">
+                     <i class="icon-close"></i>
+                 </a>
+                 <div class="input-group">
+                     <input type="text" class="form-control" placeholder="Search..." ng-model="searchParam" ng-change = test(searchParam)>
+                     <span class="input-group-btn">
+                         <span class="btn" ng-click = "search(searchParam)">
+                             <i  class="icon-magnifier"></i>
+                         </span>
+                     </span>
+                 </div>
+             </form>
+         </li>
+         <li class="start nav-item">
+             <a href="#/dashboard.html">
+                 <i class="icon-home"></i>
+                 <span class="title">首页1312323</span>
+             </a>
+         </li>
+     </ul>
+</div>

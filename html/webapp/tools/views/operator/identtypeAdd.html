@@ -1,0 +1,36 @@
+<div class="portlet light" style="width: 100%;height:100%;overflow-x: hidden;">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs font-green-sharp"></i>
+            <span class="caption-subject font-green-sharp bold uppercase">选择资源类型</span>
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="remove" ng-click="cancel()">
+            </a>
+        </div>
+    </div>
+    <div class="form-body ">
+        <div class="col-md-6" style="margin-left:25%;margin-top:20px;margin-bottom: 20px;">
+            <div class="form-group">
+                <label class="control-label col-md-4">选择资源类型:</label>
+                <div class="col-md-8" ng-init="$settings.getDictData('DICT_AC_RESOURCETYPE')">
+                    <select class="form-control" name="dict_key" ng-model="identypeFrom.idtnyype" >
+                        <option ng-repeat="d in $settings.diclist['DICT_AC_RESOURCETYPE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="portlet-body portlet light"  ng-if="operflage">
+        <div ui-grid="gridOptions"
+             ui-grid-edit ui-grid-pagination
+             ui-grid-selection ui-grid-resize-columns>
+        </div>
+        <div class="actions btn-set" style="float: right; margin-top:12px;">
+            <button type="button" name="back" class="btn btn-primary" ng-click="importAdd()"> 导入
+            </button>
+            <button type="button" name="back" class="btn btn-danger" ng-click="cancel()"> 取消
+            </button>
+        </div>
+    </div>
+</div>

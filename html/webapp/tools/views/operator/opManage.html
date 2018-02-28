@@ -1,0 +1,69 @@
+<!--操作员管理-->
+<div class="page-bar ng-scope" style="border-bottom: 1px solid #e7ecf1;">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="#">操作员</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <a href="#">操作员管理</a>
+        </li>
+    </ul>
+</div>
+<h3 class="page-title">
+    <small></small>
+</h3>
+<div class="row" ng-form="bigform">
+    <div class="col-md-12" >
+        <div class="portlet light">
+            <div class="portlet-body">
+                <div ui-grid="gridOptions"  class="grid"
+                      ui-grid-pagination
+                     ui-grid-selection ui-grid-resize-columns>
+                </div>
+                <div class="actions btn-set" style="float: left; margin-top:12px;">
+                    <button type="button" name="back" class="btn btn-primary"  ng-disabled="!checkstatus(Status,['stop','clear'])||isfalse" ng-click="operman.login(Status)"> 启用
+                    </button>
+                    <button type="button" name="back" class="btn btn-primary"  ng-disabled="!checkstatus(Status,['stop'])||isfalse" ng-click="operman.del(Status)">删除
+                    </button>
+                    <button type="button" name="back" class="btn btn-primary" ng-disabled="!checkstatus(Status,['lock'])||isfalse" ng-click="operman.logout(Status)"> 解锁
+                    </button>
+                    <button type="button" name="back" class="btn btn-primary"  ng-disabled="!checkstatus(Status,['logout','lock'])||isfalse"  ng-click="operman.clear(Status)"> 注销
+                    </button>
+                </div>
+                <div class="actions btn-set" style="float: right; margin-top:12px;">
+                    <button type="button" name="back" class="btn btn-primary" ng-click="operatAdd()"> 新增
+                    </button>
+                    <button type="button" name="back" class="btn btn-primary" ng-click="operatEdit(4)">修改
+                    </button>
+                    <button type="button" name="back" class="btn  btn-danger"  ng-click="operman.histroy()"> 查看概况
+                    </button>
+                    <button type="button" name="back" class="btn btn-primary" ng-click="operatsetqx(operman.info)"> 个人权限设置
+                    </button>
+                    <button type="button" name="back" class="btn btn-primary" ng-click="funconfig(operman)"> 配置功能行为权限
+                    </button>
+                    <!--<button type="button" name="back" class="btn btn-primary" ng-click="clearCache()"> 清除单操作员缓存
+                    </button>-->
+                    <button type="button" name="back" class="btn btn-primary" ng-click="clearCacheAll()"> 更新权限信息
+                    </button>
+                </div>
+                <div class="stauts">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+

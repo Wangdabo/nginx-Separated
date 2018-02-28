@@ -1,0 +1,638 @@
+<!-- 应用功能管理 -->
+<div class="page-bar ng-scope" style="border-bottom: 1px solid #e7ecf1;">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="#">权限</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <a href="#">应用功能管理</a>
+        </li>
+        <li ng-if="thisNode != ''">
+            <i class="fa fa-circle"></i>
+            <a href="#">当前节点:{{thisNode}}</a>
+        </li>
+    </ul>
+</div>
+<h3 class="page-title">
+    <small></small>
+</h3>
+<div class="row" ng-form="bigform">
+    <div class="col-md-12" >
+        <div class="portlet light bordered">
+            <div class="portlet-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="portlet light">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-cogs font-green-sharp"></i>
+                                    <span class="caption-subject font-green-sharp bold uppercase">应用功能管理</span>
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:;" ng-click = 'biz.reload()' class="reload">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="portlet-bodyl">
+                                <form id="s">
+                                    <input type="search" ng-model="searchitem" placeholder="搜索"  id="q"/>
+                                    <button type="submit" ng-click="biz.clear()">清空</button>
+                                </form>
+                                <div id="container" style="margin-top: 20px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <!-- 右侧展示页面 start -->
+                        <div class="portlet light portlet-fit portlet-datatable bordered"  ng-if='biz.applica'>
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-shopping-cart"></i> 应用列表 </div>
+                            </div>
+                            <div class="portlet-body" style="min-height:500px; height: 100%" >
+                                <div class="table-container">
+                                    <div ui-grid="gridOptions0" class="grid"
+                                         ui-grid-pagination
+                                         ui-grid-selection ui-grid-resize-columns>
+                                    </div>
+                                    <div class="actions btn-set" style="float: right; margin-top:12px;">
+                                        <button type="button" name="back" class="btn btn-primary" ng-click="show_win()"> 新增
+                                        </button>
+                                        <button type="button" name="back" class="btn btn-primary" ng-click="show_edit(4)">  修改
+                                        </button>
+                                        <button type="button" name="back" class="btn btn-danger" ng-click="transsetDelAll()"> 删除
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portlet light portlet-fit portlet-datatable bordered" style="height: 100%" ng-if='biz.apptab'>
+                            <div class="portlet-body portlet light">
+                                <!-- 应用页签-->
+                                <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="!tabflag">
+                                    <li ng-class="{true:'active',false:''}[yyflag.yyxx]">
+                                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[yyflag.yyxx]" ng-click="yyflag.loadgwdata(0)">
+                                            <i class="green ace-icon fa fa-bars bigger-120"></i>应用信息
+                                        </a>
+                                    </li>
+                                    <li ng-class="{true:'active',false:''}[yyflag.gnzlb]">
+                                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[yyflag.gnzlb]" ng-click="yyflag.loadgwdata(1)">
+                                            <i class="green ace-icon fa fa-bars bigger-120"></i>功能组列表
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!--应用页签结束-->
+                                <!-- 应用信息开始 -->
+                                <div class="tab-content portlet light clearfix "   ng-if="yyflag.yyxx">
+                                    <div class="col-md-12" ng-form="bigform" style="padding-left: 0px;">
+                                        <div class="portlet-body portlet light">
+                                            <div class="tab-content portlet light">
+                                                <form action="#" name="myform" class="form-horizontal">
+                                                    <div class="form-body">
+                                                        <!--/row-->
+                                                        <div class="col-md-12 col-lg-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4"> 应用名称:<span ng-class="{required:myform.dict_key.$invalid}"  > * </span></label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control" ng-model="dictionaryAdd.appName"
+                                                                           required
+                                                                           name="dict_key"  maxlength="128" ng-disabled="!editflag"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4"> 应用代码: <span   ng-class="{required:myform.dicts_kesy.$invalid}" >* </span></label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control"
+                                                                           required  ng-model="dictionaryAdd.appCode"
+                                                                           name="dicts_kesy" maxlength="64" ng-disabled="!editflag"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4"> 应用类型:<span ng-class="{required:myform.dict_type.$invalid}" >* </span></label>
+                                                                <div class="col-md-8" ng-init="$settings.getDictData('DICT_AC_APPTYPE')">
+                                                                    <select class="form-control" name="dict_type"  maxlength="255" required ng-model="dictionaryAdd.appType"  ng-disabled="!editflag">
+                                                                        <option ng-repeat="d in $settings.diclist['DICT_AC_APPTYPE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                       <!-- <div class="col-lg-6 col-md-12">
+                                                                <div class="form-group">
+                                                                <label class="control-label col-md-4"> 是否开通:<span ng-class="{required:myform.dict_isopen.$invalid}" >* </span></label>
+                                                                <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
+                                                                    <select class="form-control" required  name="dict_isopen"   ng-model="dictionaryAdd.isopen" ng-change="isOpen(dictionaryAdd.isopen)" ng-disabled="!editflag">
+                                                                        <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>-->
+                                                        <!--<div class="col-lg-6 col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4"> 是否开通:<span ng-class="{required:myform.dict_isopen.$invalid}" >* </span></label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control"
+                                                                           required  ng-model="dictionaryAdd.isopen"  translate-constants comtable="DICT_YON"
+                                                                           name="dict_isopen" maxlength="64" ng-disabled="!edsssitflag"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>-->
+                                                        <div class="col-lg-6 col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4"> IP: </label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control"
+                                                                           name="table_name" maxlength="50" ng-model="dictionaryAdd.ipAddr"  ng-disabled="!editflag"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4"> 访问地址: </label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control"
+                                                                           name="column_name" maxlength="256" ng-model="dictionaryAdd.url" ng-disabled="!editflag" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4"> 端口: </label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control"
+                                                                           name="column_name" maxlength="10"  ng-model="dictionaryAdd.ipPort"  ng-disabled="!editflag"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--<div class="col-lg-6 col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4"> 开通日期: </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="input-group date form_datetime" ng-init="$root.settings.utils.initpicker()"  ng-disabled="!editflag" >
+                                                                            <span class="input-group-btn">
+                                                                                <button class="btn default date-set"  type="button"><i  class="fa fa-calendar"></i></button>
+                                                                            </span>
+                                                                        <input type="text" class="form-control" ng-model="dictionaryAdd.openDateStr" readonly/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>-->
+                                                        <div class="col-lg-6 col-md-12"  ng-if="isOpenY">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4"> 开通日期: </label>
+                                                                <div class="col-md-8">
+                                                                        <input type="text" class="form-control" ng-model="dictionaryAdd.openDateStr" readonly/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4"> 管理维护人员:</label>
+                                                                <div class="col-md-8" ng-init="$settings.getCommData('EMP')">
+                                                                    <select class="form-control" name="dict_open"  maxlength="128"  ng-model="dictionaryAdd.guidEmpMaintenance" ng-disabled="!editflag">
+                                                                        <option ng-repeat="d in $settings.commlist['EMP'] track by $index" value="{{d.guid}}">{{d.empName}}</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4"> 应用管理角色: </label>
+                                                                <div class="col-md-8" ng-init="$settings.getCommData('ROLE')">
+                                                                    <select class="form-control" name="dict_open" maxlength="128" ng-model="dictionaryAdd.guidRoleMaintenance" ng-disabled="!editflag">
+                                                                        <option ng-repeat="d in $settings.commlist['ROLE'] track by $index" value="{{d.guid}}">{{d.roleName}}</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 col-lg-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-lg-2"> 应用描述: </label>
+                                                                <div class="col-md-8 col-lg-10">
+                                                                    <input type="text" class="form-control"
+                                                                           ng-model="dictionaryAdd.appDesc"  maxlength="512"
+                                                                           name="dict_name"  ng-disabled="!editflag"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 " style="text-align: center">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-2"></label>
+                                                                <div class="col-md-10">
+                                                                    <div class="actions btn-set" style="float: right;" ng-if="!editflag">
+                                                                        <button type="button" name="back" class="btn btn-primary" ng-if="dictionaryAdd.isopen=='N'" ng-click="biz.openApp(dictionaryAdd)"> 开通应用
+                                                                        </button>
+                                                                        <button type="button" name="back" class="btn  btn-danger" ng-if="dictionaryAdd.isopen=='Y'" ng-click="biz.clearApp(dictionaryAdd)"> 关闭应用
+                                                                        </button>
+                                                                        <button type="button" name="back" class="btn  btn-danger"  ng-click="biz.histroy()"> 查看概况
+                                                                        </button>
+                                                                        <button type="button" name="back" class="btn btn-primary" ng-click="biz.appedit(dictionaryAdd)"> 编辑应用
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="actions btn-set" style="float: right;" ng-if="editflag">
+                                                                        <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="bigform.$invalid" popover-trigger="mouseenter" ng-click="biz.appsave(dictionaryAdd)" > 保存
+                                                                        </button>
+                                                                        <button type="button" name="back" class="btn default" ng-if="myform.$invalid == true"  ng-disabled="bigform.$invalid" popover-trigger="mouseenter" > 保存
+                                                                        </button>
+                                                                        <button type="button" name="back" class="btn btn-danger" ng-click="biz.edit()"> 取消
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 应用信息结束-->
+                                <!-- 功能组列表开始-->
+                                <div class="table-container" ng-if="yyflag.gnzlb">
+                                    <div ui-grid="gridOptions1"  class="grid"
+                                          ui-grid-pagination
+                                         ui-grid-selection ui-grid-resize-columns>
+                                    </div>
+                                    <div class="actions btn-set" style="float: right;margin-top: 12px;;">
+                                        <button type="button" name="back" class="btn btn-primary" ng-click="addApp()"> 新增
+                                        </button>
+                                        <button type="button" name="back" class="btn btn-primary" ng-click="exidApp(4)">  修改
+                                        </button>
+                                        <button type="button" name="back" class="btn btn-danger" ng-click="funlistDel()"> 删除
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 功能组列表结束-->
+                        </div>
+                        <div class="portlet light portlet-fit portlet-datatable bordered"style="height: 100%" ng-if='biz.appchild'>
+                            <div class="portlet-body portlet light">
+                                <!-- 子功能页签-->
+                                <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="!tabflag">
+                                    <li ng-class="{true:'active',false:''}[childflag.gnzxx]">
+                                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[childflag.gnzxx]" ng-click="childflag.loadgwdata(0)">
+                                            <i class="green ace-icon fa fa-bars bigger-120"></i>功能组信息
+                                        </a>
+                                    </li>
+                                    <li ng-class="{true:'active',false:''}[childflag.zgnzlb]">
+                                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[childflag.zgnzlb]" ng-click="childflag.loadgwdata(1)">
+                                            <i class="green ace-icon fa fa-bars bigger-120"></i>子功能组列表
+                                        </a>
+                                    </li>
+                                    <li ng-class="{true:'active',false:''}[childflag.gnlb]">
+                                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[childflag.gnlb]" ng-click="childflag.loadgwdata(2)">
+                                            <i class="green ace-icon fa fa-bars bigger-120"></i>功能列表
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!--子功能页签结束-->
+                                <div class="tab-content portlet light clearfix "   ng-if="childflag.gnzxx">
+                                    <div class="portlet-body portlet light">
+                                        <form action="#" name="myform" class="form-horizontal ">
+                                            <div class="form-body ">
+                                                <div class="col-md-6" >
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4">功能组名称 </label>
+                                                        <div class="col-md-8">
+                                                            <input type="text" class="form-control"
+                                                                   ng-model="dictionaryAdd.funcgroupName"
+                                                                   name="id" maxlength="64"  ng-disabled="!editsflag"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6" >
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4">节点层次 </label>
+                                                        <div class="col-md-8">
+                                                            <input type="text"  class="form-control"
+                                                                   ng-model="dictionaryAdd.groupLevel"
+                                                                   name="id" maxlength="4"  ng-disabled="!editsflag"/>
+                                                            <p style="color:#ccc">请输入有效整数，数字越大排序越靠后;</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 " style="text-align: center">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-2"></label>
+                                                        <div class="col-md-10">
+                                                            <div class="actions btn-set" style="float: right;" ng-if="!editsflag">
+                                                                <button type="button" name="back" class="btn btn-primary" ng-click="biz.addschild(dictionaryAdd)"> 编辑功能组
+                                                                </button>
+                                                                <button type="button" name="back" class="btn  btn-danger"  ng-click="biz.histroy()"> 查看概况
+                                                                </button>
+                                                            </div>
+                                                            <div class="actions btn-set" style="float: right;" ng-if="editsflag">
+                                                                <button type="button" name="back"  class="btn btn-primary" ng-if="bigform.$invalid == false"  ng-disabled="bigform.$invalid" popover-trigger="mouseenter" ng-click="biz.functionsave(dictionaryAdd)" > 保存
+                                                                </button>
+                                                                <button type="button" name="back" class="btn default" ng-if="bigform.$invalid == true"  ng-disabled="bigform.$invalid" popover-trigger="mouseenter" > 保存
+                                                                </button>
+                                                                <button type="button" name="back" class="btn btn-danger" ng-click="biz.childsEdit()"> 取消
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- 功能组信息结束-->
+                                <!-- 应用信息结束-->
+                                <!-- 子功能组列表-->
+                                <div class="tab-content portlet light" ng-if="childflag.zgnzlb">
+                                    <div ui-grid="gridOptions2"  class="grid"
+                                          ui-grid-pagination
+                                         ui-grid-selection ui-grid-resize-columns>
+                                    </div>
+                                    <div class="actions btn-set" style="float: right; margin-top: 15px;">
+                                        <button type="button" name="back" class="btn btn-primary" ng-click="addchildApp()"> 新增
+                                        </button>
+                                        <button type="button" name="back" class="btn btn-primary" ng-click="exidchildApp(4)"> 编辑
+                                        </button>
+                                        <button type="button" name="back" class="btn btn-danger" ng-click="appchildDelAll()"> 删除
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- 子功能组列表结束-->
+                                <!-- 功能列表-->
+                                <div class="tab-content portlet light" ng-if="childflag.gnlb">
+                                    <div ui-grid="gridOptions3"  class="grid"
+                                          ui-grid-pagination
+                                         ui-grid-selection ui-grid-resize-columns>
+                                    </div>
+                                    <div class="actions btn-set" style="float: right; margin-top: 15px;">
+                                        <button type="button" name="back" class="btn btn-primary" ng-click="addappList()"> 新增
+                                        </button>
+                                        <button type="button" name="back" class="btn btn-primary" ng-click="exitappList(4)"> 编辑
+                                        </button>
+                                        <button type="button" name="back" class="btn btn-danger" ng-click="exitapplistDelAll()"> 删除
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- 功能列表-->
+                            </div>
+                        </div>
+                        <div class="portlet light portlet-fit portlet-datatable bordered" style="height: 100%;" ng-if='biz.appfund'>
+                            <div class="portlet-body portlet light">
+                                <!-- 底层功能页签-->
+                                <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="!tabflag">
+                                    <li ng-class="{true:'active',false:''}[appfunflag.gnlist]">
+                                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[appfunflag.gnlist]" ng-click="appfunflag.loadgwdata(0)">
+                                            <i class="green ace-icon fa fa-bars bigger-120"></i>功能信息
+                                        </a>
+                                    </li>
+                                    <li ng-class="{true:'active',false:''}[appfunflag.zylist]">
+                                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[appfunflag.zylist]" ng-click="appfunflag.loadgwdata(1)">
+                                            <i class="green ace-icon fa fa-bars bigger-120"></i>资源信息
+                                        </a>
+                                    </li>
+                                    <li ng-class="{true:'active',false:''}[appfunflag.gnactive]">
+                                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[appfunflag.gnactive]" ng-click="appfunflag.loadgwdata(2)">
+                                            <i class="green ace-icon fa fa-bars bigger-120"></i>行为类型
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!--底层功能页签结束-->
+                                <!-- 应用信息结束-->
+                                <!-- 子功能组列表-->
+                                <div class="tab-content portlet light clearfix" ng-if="appfunflag.gnlist">
+                                    <form action="#" name="myform" class="form-horizontal ">
+                                        <div class="form-body ">
+                                            <div class="col-md-6" >
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">功能名称<span ng-class="{required:myform.dict_key.$invalid}"  >* </span></label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" class="form-control"
+                                                               ng-model="dictionaryAdd.funcName" required maxlength="128"
+                                                               name="dict_key" ng-disabled="!editflag"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6" >
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">功能编号<span ng-class="{required:myform.dict_key1.$invalid}"  >* </span></label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" class="form-control"
+                                                               ng-model="dictionaryAdd.funcCode" required  maxlength="64"
+                                                               name="dict_key1" ng-disabled="!editflag"/>
+                                                        <span style="color: #ccc">请输入功能编码,建议使用数字和字母组合</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6" >
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">功能类型</label>
+                                                    <div class="col-md-8" ng-init="$settings.getDictData('DICT_AC_FUNCTYPE')">
+                                                        <select class="form-control" name="dict_open" ng-model="dictionaryAdd.funcType" maxlength="255" ng-disabled="!editflag">
+                                                            <option ng-repeat="d in $settings.diclist['DICT_AC_FUNCTYPE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6" >
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">行为类型</label>
+                                                    <div class="col-md-8" ng-init="$settings.getCommData('BHVTYPE')">
+                                                        <select class="form-control" name="dict_open" ng-model="dictionaryAdd.guidBhvtypeDef" maxlength="255" ng-disabled="!edit">
+                                                            <option ng-repeat="d in $settings.commlist['BHVTYPE'] track by $index" value="{{d.guid}}">{{d.bhvtypeName}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6" >
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">是否定义为菜单</label>
+                                                    <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
+                                                        <select class="form-control" name="dict_open" ng-model="dictionaryAdd.ismenu" ng-disabled="!editflag">
+                                                            <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12" >
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-2">功能调用入口</label>
+                                                    <div class="col-md-10">
+                                                        <input type="text" class="form-control"
+                                                               ng-model="dictionaryAdd.funcAction"  maxlength="256"
+                                                               name="id" ng-disabled="!editflag"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12" >
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-2">输入参数</label>
+                                                    <div class="col-md-10">
+                                                        <input type="text" class="form-control"
+                                                               ng-model="dictionaryAdd.paraInfo" maxlength="256"
+                                                               name="id" ng-disabled="!editflag"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12" >
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-2">功能描述</label>
+                                                    <div class="col-md-10">
+                                                        <input type="text" class="form-control" maxlength="512"
+                                                               ng-model="dictionaryAdd.funcDesc"
+                                                               name="id" ng-disabled="!editflag"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-2"></label>
+                                                    <div class="col-md-10">
+                                                        <div class="actions btn-set" style="float: right;" ng-if="!editflag">
+                                                            <button type="button" name="back" class="btn btn-primary" ng-click="biz.appssedit(dictionaryAdd)"> 编辑功能
+                                                            </button>
+                                                            <button type="button" name="back" class="btn  btn-danger"  ng-click="biz.histroy()"> 查看概况
+                                                            </button>
+                                                        </div>
+                                                        <div class="actions btn-set" style="float: right;" ng-if="editflag">
+                                                            <button type="button" name="back"  class="btn btn-primary" ng-if="myform.$invalid == false"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" ng-click="biz.appfunsave(dictionaryAdd)" > 保存
+                                                            </button>
+                                                            <button type="button" name="back" class="btn default" ng-if="myform.$invalid == true"  ng-disabled="myform.$invalid" popover-trigger="mouseenter" > 保存
+                                                            </button>
+                                                            <button type="button" name="back" class="btn  btn-danger"  ng-click="biz.histroy()"> 查看概况
+                                                            </button>
+                                                            <button type="button" name="back" class="btn btn-danger" ng-click="biz.funedit(dictionaryAdd)"> 取消
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- 子功能组列表结束-->
+                                <!-- 资源列表-->
+                                <div class="tab-content portlet light clearfix" ng-if="appfunflag.zylist">
+                                    <!--<form action="#" name="myform" class="form-horizontal ">
+                                        <div class="form-body ">
+                                            <div class="col-md-6" >
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">资源类型</label>
+                                                    <div class="col-md-8" ng-init="$settings.getDictData('DICT_AC_FUNCRESTYPE')">
+                                                        <select class="form-control" name="dict_open" maxlength="255" ng-model="dictionaryAdd.resType" ng-disabled="!editflag">
+                                                            <option ng-repeat="d in $settings.diclist['DICT_AC_FUNCRESTYPE'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6" >
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">资源路径</label>
+                                                    <div class="col-md-8">
+                                                        &lt;!&ndash; 默认设置成只读属性&ndash;&gt;
+                                                        <input type="text" class="form-control" maxlength="256" ng-model="dictionaryAdd.resPath" name="id" ng-readonly="!editflag"/>
+                                                        <span style="color:#ccc">请输入该功能的路径,即路由路径</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6" >
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">构建包名</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" class="form-control"
+                                                               ng-model="dictionaryAdd.compackName"  maxlength="40"
+                                                               name="id" ng-readonly="!editflag"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6" >
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">资源显示名称</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" class="form-control" maxlength="128"
+                                                               ng-model="dictionaryAdd.resShowName"
+                                                               name="id"  ng-readonly="!editflag"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-2"></label>
+                                                    <div class="col-md-10">
+                                                        <div class="actions btn-set" style="float: right;" ng-if="!editflag">
+                                                            <button type="button" name="back" class="btn btn-primary" ng-click="biz.resources(dictionaryAdd)"> 编辑资源
+                                                            </button>
+                                                        </div>
+                                                        <div class="actions btn-set" style="float: right;" ng-if="editflag">
+                                                            <button type="button" name="back" class="btn btn-primary" ng-click="biz.save(dictionaryAdd)"> 保存
+                                                            </button>
+
+                                                            <button type="button" name="back" class="btn btn-danger" ng-click="biz.resourcesedit()"> 取消
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>-->
+                                    <div class="tab-content portlet light" >
+                                        <div ui-grid="gridResources"  class="grid"
+                                             ui-grid-pagination
+                                             ui-grid-selection ui-grid-resize-columns></div>
+                                    </div>
+                                    <div class="actions btn-set" style="float: right; margin-top: 20px;">
+                                        <button type="button" name="back" class="btn btn-primary" ng-click="biz.addResources()">新增资源
+                                        </button>
+                                        <button type="button" name="back" class="btn btn-primary" ng-click="biz.editResources()">修改资源
+                                        </button>
+                                        <button type="button" name="back" class="btn btn-primary" ng-click="biz.delResources()">删除资源
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- 资源列表-->
+                                <!-- 功能行为-->
+                                <div class="tab-content portlet light" ng-if="appfunflag.gnactive">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-6 col-md-offset-3" >
+                                                <div class="form-group clearfix">
+                                                    <label class="control-label col-md-3"  style="line-height:36px">切换类型</label>
+                                                    <div class="col-md-10" ng-init="$settings.getCommData('BHVTYPE')">
+                                                        <select class="form-control" name="dict_open" ng-model="dictionaryAdd.guidBhvtypeDef" ng-change="changetype(dictionaryAdd.guidBhvtypeDef)" maxlength="255">
+                                                            <option ng-repeat="d in $settings.commlist['BHVTYPE'] track by $index" value="{{d.guid}}">{{d.bhvtypeName}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- 右侧显示-->
+                                        <div class="col-md-12 portlet light" style="height:100%;" >
+                                            <div class="portlet-body">
+                                                <div class="tab-content portlet light" >
+                                                    <div ui-grid="gridOptions5"  class="grid"  id="tests"
+                                                         ui-grid-pagination
+                                                         ui-grid-selection ui-grid-resize-columns ></div>
+                                                    <div class="actions btn-set" style="float: right; margin-top: 63px;">
+                                                        <button type="button" name="back" class="btn btn-primary" ng-click="biz.functactive()">新增功能行为
+                                                        </button>
+                                                        <button type="button" name="back" class="btn btn-primary" ng-click="biz.functactiveDel()">删除功能行为
+                                                        </button>
+                                                        <button type="button" name="back" class="btn btn-primary" ng-if="seteffinv" ng-click="biz.effective()"> 设为有效
+                                                        </button>
+                                                        <button type="button" name="back" class="btn btn-danger" ng-if="invalid" ng-click="biz.invalid()"> 设为无效
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 功能行为-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>

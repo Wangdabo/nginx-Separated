@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="zh" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="zh" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="zh" data-ng-app="LoginApp">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8"/>
+    <title> Tools ABF | 登录</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <!--<link href="ng/css／useso.css" rel="stylesheet" type="text/css"/>-->
+    <link href="assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link href="assets/global/plugins/select2/css/select2.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/pages/css/login-soft.css" rel="stylesheet" type="text/css"/>
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <!-- BEGIN THEME STYLES -->
+    <link href="assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+    <link href="assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/layouts/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+    <link id="style_color1" href="../assets/layouts/layout/css/themes/default.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/layouts/layout/css/custom.css" rel="stylesheet" type="text/css"/>
+    <!-- END THEME STYLES -->
+    <link rel="shortcut icon" href="favicon.ico"/>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="login">
+<!-- BEGIN LOGO -->
+<div class="logo">
+    <a>
+        <img src="../assets/layouts/layout/img/governor.png" style="height:30px;width:150px" alt=""/>
+    </a>
+</div>
+<!-- END LOGO -->
+<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+<div class="menu-toggler sidebar-toggler">
+</div>
+<!-- END SIDEBAR TOGGLER BUTTON -->
+<!-- BEGIN LOGIN -->
+<div class="content" >
+    <form>
+        <div class="login-form">
+            <h3 class="form-title"></h3>
+            <div class="alert alert-danger display-hide">
+                <button class="close" data-close="alert"></button>
+                <span>请输入用户名和密码.</span>
+            </div>
+            <div class="form-group">
+                <label class="control-label visible-ie8 visible-ie9">用户名</label>
+                <div class="input-icon">
+                    <i class="fa fa-user"></i>
+                    <input class="form-control placeholder-no-fix" type="text"  placeholder="请输入5位数用户名"   id="loginname" name="loginname"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label visible-ie8 visible-ie9">密码</label>
+                <div class="input-icon">
+                    <i class="fa fa-lock"></i>
+                    <input class="form-control placeholder-no-fix" type="password" placeholder="请输入6位数密码"    id="password" name="password"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label visible-ie8 visible-ie9">选择身份</label>
+                <div class="input-icon">
+                    <i class="icon-user-follow" style="color: #ccc;"></i>
+                    <select class="form-control placeholder-no-fix"   id="opertor"   name="opertor">
+                        <option value="">请选择身份</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-actions" style="margin-left:0px;">
+                <label class="checkbox">
+                    <input type="checkbox" name="remember" value="1"/> 记住我 </label>
+                <!--<button id="login" type="submit" class="btn blue pull-right"  disabled>-->
+                <button id="login" type="submit" class="btn blue pull-right">
+                    登录 <i class="m-icon-swapright m-icon-white"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- END LOGIN -->
+<!-- BEGIN COPYRIGHT -->
+<!--<div class="copyright">
+    2016 &copy; TIS.
+</div>-->
+
+<!--应用程序所用写在依赖之后，防止找不到对应的依赖-->
+<!-- Insert this line above script imports  -->
+<script>
+    if (typeof module === 'object') {window.module = module; module = undefined;}
+</script>
+
+<!-- END COPYRIGHT -->
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE PLUGINS -->
+
+<script src="assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/angularjs/angular.min.js" type="text/javascript"></script>
+<script src="js/controllers/m_loginController.js" type="text/javascript"></script>
+<script src="js/service/login_service.js" type="text/javascript"></script>
+<script src="js/scripts/global.js"></script>
+<!--[if lt IE 9]>
+<script src="../assets/global/plugins/respond.min.js"></script>
+<script src="../assets/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+
+
+<link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-toastr/toastr.min.css"/>
+<script src="assets/global/plugins/bootstrap-toastr/toastr.min.js"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/backstretch/jquery.backstretch.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="assets/global/plugins/select2/js/select2.min.js"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="assets/pages/scripts/login-soft.js" type="text/javascript"></script>
+<script src="assets/global/plugins/RXjs/Rx.min.js"></script>
+
+<script src="js/main.js"></script>
+<!-- END PAGE LEVEL SCRIPTS -->
+
+<!--应用程序所用写在依赖之后，防止找不到对应的依赖-->
+<!-- Insert this line after script imports -->
+<script>if (window.module) module = window.module;</script>
+
+
+<script>
+    $("input").on('change',function(){
+        var namelangth =  $("#loginname").val().length;
+        var passlength = $("#password").val().length;
+        /*if(passlength>=6){
+            $('#login').removeAttr("disabled");
+        }else{
+            $('#login').attr('disabled',"true");
+        }*/
+    })
+    $(function(){
+        $("body").keydown(function(){
+            if(event.keyCode == "13"){
+                var form = {};
+                form.userId = $("#loginname").val();
+                form.password = $("#password").val();
+                form.identityGuid =$("#opertor").val();
+//        form.appGuid = 'APP1499956132';
+                form.appCode = 'ABF';
+                $.ajax({
+                    url:"../AcAuthenticationController/login",
+                    type:"post",
+                    dataType:'json',
+                    data:JSON.stringify(form),
+                    xhrFields: {
+                    withCredentials: true
+                    },
+                    headers:{token:'abck'},
+                    processData:false,
+                    contentType:'application/json',
+                    success:function(data){
+                        data = angular.fromJson(data);
+                        if(data.status == "success"){
+//                    sessionStorage.user = JSON.stringify(data.retMessage.user);
+//                    sessionStorage.menus = data.retMessage.menu;
+                            sessionStorage.opertor = $("#opertor").find("option:selected").text();
+//                    window.location = "../tools/index.html#/dashboard";//如果正确，则进入主页
+                            window.location = manurl+'/tools/index.html#/dashboard';//如果正确，则进入主页
+                            sessionStorage.clear('toState');
+                            sessionStorage.clear('toParams');//清除缓存
+                        }else {
+                            toastr['error']( data.retMessage);
+                        }
+                    }
+                });
+            }
+
+        })
+
+    })
+    var render = function (data) {
+        if(data.status == "success"){
+            console.log(data);
+            if(!isNull(data.retMessage)){
+                var datas = data.retMessage;
+                var html = '';
+                //进行默认验证
+                for(var i =0;i< datas.length; i++){
+                    if(datas[i].identityFlag == 'Y'){
+                        html+= '<option value="'+datas[i].guid+'">'+datas[i].identityName+'</option>';
+                        break;
+                    }
+                }
+                for(var j =0;j< datas.length; j++){
+                    if(datas[j].identityFlag == 'Y'){
+                        continue;
+                    }
+                    html+= '<option value="'+datas[j].guid+'">'+datas[j].identityName+'</option>';
+                }
+                $('select').html(html);
+            }else{
+                console.log("目前暂无身份")
+            }
+        }else{
+            toastr['error'](data.retMessage+'登录失败');
+            var html = '<option>请选择身份</option>';
+            $('select').html(html);
+        }
+    }
+
+
+    var text = document.querySelector('#loginname');
+    Rx.Observable.fromEvent(text, 'change')
+            .debounceTime(1000)
+            .pluck('target', 'value')
+            .switchMap(url => $.ajax({url:manurl+"/AcAuthenticationController/checkUserStatus",type:"post",xhrFields: {
+            withCredentials: true},contentType:'application/json',data:JSON.stringify({userId:url}), processData:false,dataType:'json'}))
+        .subscribe(
+            data => render(data));
+
+    var btn=document.getElementById('login');
+    //登陆调用服务,传入所需参数
+    btn.onclick = function () {
+        var form = {};
+        form.userId = $("#loginname").val();
+        form.password = $("#password").val();
+        // form.identityGuid =$("#opertor").val();
+        form.identityGuid ='3';
+//        form.appGuid = 'APP1499956132';
+        form.appCode = 'ABF';
+        console.log(form);
+        $.ajax({
+            url: manurl+"/AcAuthenticationController/login",
+            type:"post",
+            dataType:'json',
+            data:JSON.stringify(form),
+            xhrFields: {
+            withCredentials: true
+            },
+            headers:{token:'abck'},
+            processData:false,
+            contentType:'application/json',
+            success:function(data){
+                data = angular.fromJson(data);
+                if(data.status == "success"){
+//                    sessionStorage.user = JSON.stringify(data.retMessage.user);
+//                    sessionStorage.menus = data.retMessage.menu;
+                    sessionStorage.opertor = $("#opertor").find("option:selected").text();
+//                    window.location = "../tools/index.html#/dashboard";//如果正确，则进入主页
+                    window.location = muusr+'/index.html#/dashboard';//如果正确，则进入主页
+                    sessionStorage.clear('toState');
+                    sessionStorage.clear('toParams');//清除缓存
+                }else {
+                    toastr['error']( data.retMessage);
+                }
+            }
+        });
+    };
+    $(document).ready(function () {
+//        Metronic.init();
+//        Login.init();
+        $.backstretch([
+                    "../assets/pages/media/bg/2.jpg",
+//                    "../assets/pages/media/bg/3.jpg",
+//                    "../assets/pages/media/bg/4.jpg",
+//                    "../assets/pages/media/bg/1.jpg"
+                ], {
+                    fade: 1000,
+                    duration: 4000
+                }
+        );
+    });
+
+</script>
+<!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>

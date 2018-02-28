@@ -1,0 +1,358 @@
+<!--角色权限配置页面-->
+<div class="page-bar ng-scope" style="border-bottom: 1px solid #e7ecf1;">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="#">角色管理</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <a href="#">{{RoleName}}</a>
+        </li>
+    </ul>
+    <div class="actions btn-set">
+        <button type="button" name="back" class="btn default"  style="float: right;margin-top:3px;" ng-click="myback()"><i
+                class="fa fa-angle-left"></i> 返回
+        </button>
+    </div>
+</div>
+<h3 class="page-title">
+    <small></small>
+</h3>
+<div class="row">
+    <div class="col-md-12 portlet light">
+        <div class="portlet light">
+            <div class="portlet-body portlet light">
+                <!--岗位页签-->
+                <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" ng-if="!tabflag">
+                    <li ng-class="{true:'active',false:''}[roleflag.limit]">
+                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[roleflag.limit]" ng-click="role.loadgwdata(0)">
+                            <i class="green ace-icon fa fa-bars bigger-120"></i>角色的功能范围
+                        </a>
+                    </li>
+                    <li ng-class="{true:'active',false:''}[roleflag.dist]">
+                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[roleflag.dist]" ng-click="role.loadgwdata(1)">
+                            <i class="green ace-icon fa fa-bars bigger-120"></i>角色下的组织对象
+                        </a>
+                    </li>
+                    <li ng-class="{true:'active',false:''}[roleflag.operatorer]">
+                        <a  data-toggle="tab" href ng-class="{true:'link',false:''}[roleflag.operatorer]" ng-click="role.loadgwdata(7)">
+                            <i class="green ace-icon fa fa-bars bigger-120"></i>角色下的操作员
+                            <!-- 也是列表，可以新增删除-->
+                        </a>
+                    </li>
+                    <li ng-class="{true:'active',false:''}[roleflag.entity]">
+                        <a data-toggle="tab" href ng-class="{true:'link',false:''}[roleflag.entity]" ng-click="role.loadgwdata('entity')">
+                            <i class="green ace-icon fa fa-bars bigger-120"></i>角色的实体范围管理
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content portlet light" ng-show="roleflag.limit">
+                    <div class="portlet-body col-md-6">
+                        <!--是否允许查询角色功能-->
+                        <div fun-active="/AcRoleController/queryRoleFunc">
+                            <div  id="container"></div>
+                        </div>
+                        <button type="button" name="back" class="btn btn-primary" style="margin-top:15px; margin-left: 20px;" fun-active="/AcRoleController/configRoleFunc"  ng-if="!edit" ng-click="role.edidConfig()"> 修改功能范围
+                        </button>
+                        <button type="button" name="back" class="btn btn-primary" style="margin-top:15px; margin-left: 20px;" ng-if="edit" ng-click="role.checkAll()"> 保存
+                        </button>
+                    </div>
+                    <div class="col-md-6" ng-show="funcedit">
+                        <!--是否有查询角色功能行为权限-->
+                        <div fun-active="/AcRoleController/queryAcRoleBhvsByFuncGuid">
+                            <div ui-grid="gridFuncedit" class="grid" ng-if="funcedit"
+                                 ui-grid-pagination
+                                 ui-grid-selection ui-grid-resize-columns>
+                            </div>
+                        </div>
+                <div  class="col-md-12"  style="margin-top: 20px;float: right;">
+                    <button type="button" name="back" class="btn btn-primary" fun-active="/AcAppController/queryAllBhvDefForFunc" ng-click="role.funclist()"> 新增
+                    </button>
+                    <button type="button" name="back" class="btn btn-danger" fun-active="/AcRoleController/removeAcRoleBhvs"  ng-click="role_Deletefunc()"> 删除
+                    </button>
+                </div>
+            </div>
+        </div>
+                <div class="tab-content portlet light" ng-show="roleflag.dist">
+                    <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" >
+                        <li ng-class="{true:'active',false:''}[rolesflag.zhiwei]">
+                            <a  data-toggle="tab" href ng-class="{true:'link',false:''}[rolesflag.zhiwei]" ng-click="role.loadgwdata(6)">
+                                <i class="green ace-icon fa fa-bars bigger-120"></i>职务
+                            </a>
+                        </li>
+                        <li ng-class="{true:'active',false:''}[rolesflag.org]">
+                            <a  data-toggle="tab" href ng-class="{true:'link',false:''}[rolesflag.org]"  ng-click="role.loadgwdata(3)">
+                                <i class="green ace-icon fa fa-bars bigger-120"></i>机构
+                            </a>
+                        </li>
+                        <li ng-class="{true:'active',false:''}[rolesflag.post]">
+                            <a  data-toggle="tab" href ng-class="{true:'link',false:''}[rolesflag.post]" ng-click="role.loadgwdata(5)">
+                                <i class="green ace-icon fa fa-bars bigger-120"></i>岗位
+                            </a>
+                        </li>
+                        <li ng-class="{true:'active',false:''}[rolesflag.worklist]">
+                            <a  data-toggle="tab" href ng-class="{true:'link',false:''}[rolesflag.worklist]" ng-click="role.loadgwdata(4)">
+                                <i class="green ace-icon fa fa-bars bigger-120"></i>工作组
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content portlet light" ng-show="rolesflag.org">
+                        <div fun-active="/AcRoleController/queryRoleInParty">
+                            <div ui-grid="gridOptions2" class="grid" ng-if="rolesflag.org"
+                                 ui-grid-pagination
+                                 ui-grid-selection ui-grid-resize-columns>
+                            </div>
+                        </div>
+                        <div class="actions btn-set" style="float: right; margin-top:12px;">
+                            <button type="button" name="back" class="btn btn-primary" fun-active="/om/org/queryAllorg" ng-click="role.orgAdd()"> 新增
+                            </button>
+                            <!--<button type="button" name="back" class="btn btn-primary" ng-click="role_orgEdit(4)">  修改
+                            </button>-->
+                            <button type="button" name="back" class="btn btn-danger"  fun-active="/AcRoleController/removePartyRole" ng-click="role_orgDelete()"> 删除
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tab-content portlet light" ng-show="rolesflag.worklist">
+                        <div fun-active="/AcRoleController/queryRoleInParty">
+                            <div ui-grid="gridOptions3"  ng-if="rolesflag.worklist"  class="grid"
+                                 ui-grid-pagination
+                                 ui-grid-selection ui-grid-resize-columns>
+                            </div>
+                        </div>
+                        <div class="actions btn-set" style="float: right; margin-top:12px;">
+                            <button type="button" name="back" class="btn btn-primary" fun-active="/om/workgroup/queryAllGroup" ng-click="role.workAdd()"> 新增
+                            </button>
+                            <!--<button type="button" name="back" class="btn btn-primary" ng-click="role_workEdit(4)">  修改
+                            </button>-->
+                            <button type="button" name="back" class="btn btn-danger" fun-active="/AcRoleController/removePartyRole" ng-click="role_workDelete()"> 删除
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tab-content portlet light" ng-show="rolesflag.post">
+                        <div fun-active="/AcRoleController/queryRoleInParty">
+                            <div ui-grid="gridOptions4" ng-if="rolesflag.post"  class="grid"
+                                 ui-grid-pagination
+                                 ui-grid-selection ui-grid-resize-columns>
+                            </div>
+                        </div>
+
+                        <div class="actions btn-set" style="float: right; margin-top:12px;">
+                            <button type="button" name="back" class="btn btn-primary" fun-active="/om/org/queryAllposition" ng-click="role.postAdd()"> 新增
+                            </button>
+                            <!--<button type="button" name="back" class="btn btn-primary" ng-click="role_postEdit(4)">  修改
+                            </button>-->
+                            <button type="button" name="back" class="btn btn-danger" fun-active="/AcRoleController/removePartyRole" ng-click="role_postDelete()"> 删除
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tab-content portlet light" ng-show="rolesflag.zhiwei">
+                        <div fun-active="/AcRoleController/queryRoleInParty">
+                            <div ui-grid="gridOptionzw" ng-if="rolesflag.zhiwei"   class="grid"
+                                 ui-grid-pagination
+                                 ui-grid-selection ui-grid-resize-columns>
+                            </div>
+                        </div>
+
+                        <div class="actions btn-set" style="float: right; margin-top:12px;">
+                            <button type="button" name="back" class="btn btn-primary"  fun-active="/om/duty/queryDutyList" ng-click="role.zhiwuAdd()"> 新增
+                            </button>
+                            <!--<button type="button" name="back" class="btn btn-primary" ng-click="role.zhiwuEdit(4)">  修改
+                            </button>-->
+                            <button type="button" name="back" class="btn btn-danger" fun-active="/AcRoleController/removePartyRole" ng-click="role.zhiwuDelete()"> 删除
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- 操作员tab-->
+                <div class="tab-content portlet light" ng-show="roleflag.operatorer">
+                    <div fun-active="/AcRoleController/queryOperatorRole">
+                        <div ui-grid="gridOptioner" ng-if="roleflag.operatorer" class="grid"
+                             ui-grid-pagination
+                             ui-grid-selection ui-grid-resize-columns>
+                        </div>
+                    </div>
+                    <div class="actions btn-set" style="float: right; margin-top:12px;">
+                        <button type="button" name="back" class="btn btn-primary" fun-active="/AcOperatorController/queryAllOperator" ng-click="role.operaAdd()"> 新增
+                        </button>
+                        <!--<button type="button" name="back" class="btn btn-primary" ng-click="role.operaEdit(4)">  修改
+                        </button>-->
+                        <button type="button" name="back" class="btn btn-danger" fun-active="/AcRoleController/removeOperatorRole" ng-click="role.operaDelete()"> 删除
+                        </button>
+                    </div>
+                </div>
+                <!--数据实体范围-->
+                <div class="tab-content portlet light" ng-show="roleflag.entity">
+                    <div class="portlet-body col-md-5">
+                        <div fun-active="/AcRoleController/acRoleEntityTree">
+                            <div id="entitconter"></div>
+                        </div>
+                        <!--<div id="entitschtree" ng-show="!entitschtree"></div>-->
+                        <button type="button" name="back" class="btn btn-primary" style="margin-top:15px; margin-left: 20px;" fun-active="/AcRoleController/configRoleEntity" ng-if="!edit" ng-click="role.editEntity()"> 修改实体范围
+                        </button>
+                        <button type="button" name="back" class="btn btn-primary" style="margin-top:15px; margin-left: 20px;" ng-if="edit" ng-click="role.EntitySave()"> 保存
+                        </button>
+                    </div>
+                    <div class="tab-content portlet light col-md-7"  ng-show="eneitsGrid">
+                        <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" >
+                            <li ng-class="{true:'active',false:''}[eneitsflag.current]">
+                                <a  data-toggle="tab" href ng-class="{true:'link',false:''}[eneitsflag.current]" ng-click="role.eneisflag('current')">
+                                    <i class="green ace-icon fa fa-bars bigger-120"></i>当前实体
+                                </a>
+                            </li>
+                            <li ng-class="{true:'active',false:''}[eneitsflag.Attributes]">
+                                <a  data-toggle="tab" href ng-class="{true:'link',false:''}[eneitsflag.Attributes]"  ng-click="role.eneisflag('Attributes')">
+                                    <i class="green ace-icon fa fa-bars bigger-120"></i>实体属性
+                                </a>
+                            </li>
+                            <li ng-class="{true:'active',false:''}[eneitsflag.range]">
+                                <a  data-toggle="tab" href ng-class="{true:'link',false:''}[eneitsflag.range]" ng-click="role.eneisflag('range')">
+                                    <i class="green ace-icon fa fa-bars bigger-120"></i>实体范围
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content portlet light" ng-show="eneitsflag.current">
+                            <form action="#" name="myform" class="form-horizontal clear" ng-if="!editflag">
+                                <div class="form-body portlet light">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"> 是否可增加:<span ng-class="{required:myform.isAdd.$invalid}"  > * </span></label>
+                                            <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
+                                                <select class="form-control"   required ng-readonly="!editflag"  ng-model="dataEnt.isadd" name="isAdd">
+                                                    <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"> 是否可删除:<span ng-class="{required:myform.idDel.$invalid}"  > * </span></label>
+                                            <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
+                                                <select class="form-control" ng-readonly="!editflag"  required   ng-model="dataEnt.isdel" name="idDel">
+                                                    <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"> 是否可修改:<span ng-class="{required:myform.isModief.$invalid}"  > * </span></label>
+                                            <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
+                                                <select class="form-control" ng-readonly="!editflag"  required   ng-model="dataEnt.ismodify" name="isModief">
+                                                    <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"> 是否可查看:<span ng-class="{required:myform.isview.$invalid}"  > * </span></label>
+                                            <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
+                                                <select class="form-control" ng-readonly="!editflag"  required   ng-model="dataEnt.isview" name="isview">
+                                                    <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2"></label>
+                                            <div class="col-md-10">
+                                                <div class="actions btn-set" style="float: right;">
+                                                    <button type="button" name="back"  fun-active="/AcRoleController/updateAcRoleEntity"  class="btn btn-primary"
+                                                            ng-click="role.entityEdit(dataEnt)"> 编辑实体
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <form action="#" name="myform" class="form-horizontal clear" ng-if="editflag">
+                                <div class="form-body portlet light">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"> 是否可增加:<span ng-class="{required:myform.isAdd.$invalid}"  > * </span></label>
+                                            <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
+                                                <select class="form-control"   required   ng-model="dataEnt.isadd" name="isAdd">
+                                                    <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"> 是否可删除:<span ng-class="{required:myform.idDel.$invalid}"  > * </span></label>
+                                            <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
+                                                <select class="form-control"   required   ng-model="dataEnt.isdel" name="idDel">
+                                                    <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"> 是否可修改:<span ng-class="{required:myform.isModief.$invalid}"  > * </span></label>
+                                            <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
+                                                <select class="form-control"   required   ng-model="dataEnt.ismodify" name="isModief">
+                                                    <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4"> 是否可查看:<span ng-class="{required:myform.isview.$invalid}"  > * </span></label>
+                                            <div class="col-md-8" ng-init="$settings.getDictData('DICT_YON')">
+                                                <select class="form-control"   required   ng-model="dataEnt.isview" name="isview">
+                                                    <option ng-repeat="d in $settings.diclist['DICT_YON'] track by $index" value="{{d.sendValue}}">{{d.itemName}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="actions btn-set" style="float: right;">
+                                        <button type="button" name="back" class="btn btn-primary" ng-click="role.entitySave(dataEnt)"> 保存
+                                        </button>
+                                        <button type="button" name="back" class="btn btn-danger" ng-click="role.entityCancel()"> 取消
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-content portlet light" ng-show="eneitsflag.Attributes">
+                            <!--查询实体下所有属性-->
+                            <div fun-active="/AcRoleController/getAcRoleEntitityfields">
+                                <div ui-grid="gridAttributes" ng-if="eneitsflag.Attributes"  class="grid"
+                                     ui-grid-pagination
+                                     ui-grid-selection ui-grid-resize-columns>
+                                </div>
+                            </div>
+                            <div class="actions btn-set" style="float: right; margin-top:12px;">
+                                <button type="button" name="back" class="btn btn-primary" fun-active="/AcRoleController/queryAcEntityfieldList" ng-click="role.AttributesAdd()"> 新增实体属性
+                                </button>
+                                <button type="button" name="back" class="btn btn-primary" fun-active="/AcRoleController/updateAcRoleEntityfield"  ng-click="role.AttributesEdit()"> 修改实体属性
+                                </button>
+                                <button type="button" name="back" class="btn btn-danger" fun-active="/AcRoleController/deleteAcRoleEntityfield" ng-click="role_AttributesDel()"> 删除实体属性
+                                </button>
+                            </div>
+                        </div>
+                        <div class="tab-content portlet light" ng-show="eneitsflag.range">
+                            <div fun-active="/AcRoleController/getAcRoleDatascopes">
+                                <div ui-grid="grideditEntity" ng-if="eneitsflag.range" class="grid"
+                                     ui-grid-pagination
+                                     ui-grid-selection ui-grid-resize-columns>
+                                </div>
+                            </div>
+                            <div class="actions btn-set" style="float: right; margin-top:12px;">
+                                <button type="button" name="back" class="btn btn-primary" fun-active="/AcRoleController/queryAcDatascopeList" ng-click="role.funEntityclist()"> 新增功能范围
+                                </button>
+                                <button type="button" name="back" class="btn btn-danger" fun-active="/AcRoleController/deleteAcRoleDatascope" ng-click="role.DeleteEntityfunc()"> 删除功能范围
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

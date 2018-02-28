@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
+    <file url="file://$PROJECT_DIR$/assets/global/plugins/angularjs/angular-sanitize.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/assets/global/plugins/googleapis/fonts/k3k702ZOKiLJc3WVjuplzBWV49_lSm1NYrwo-zkhivY.woff2" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/assets/pages/scripts/components-select2.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/assets/pages/scripts/table-editable.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/controllers/Systempara/Systempara_controller.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/controllers/dictionary/dictionaryController.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/controllers/journal/journallog.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/controllers/m_loginController.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/controllers/numberResources/numresController.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/controllers/shortcutMenu/shortcutMenu_Controller.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/controllers/transtime/transtimer.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/directive/Lengthlimit.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/directive/drop.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/directive/testrepeat.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/filter.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/service/Systempara/Systempara_service.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/service/behavior/behavior_service.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/service/numres/numres_service.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/service/operator/operator_service.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/js/service/roleManage/role_service.js" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/tools/json/service.json" charset="UTF-8" />
+  </component>
+</project>

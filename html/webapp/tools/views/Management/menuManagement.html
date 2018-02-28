@@ -1,0 +1,192 @@
+<!--菜单管理-->
+<div class="page-bar ng-scope" style="border-bottom: 1px solid #e7ecf1;">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="#">权限</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <a href="#">菜单管理</a>
+        </li>
+        <li ng-if="thisNode != ''">
+            <i class="fa fa-circle"></i>
+            <a href="#">当前节点:{{thisNode}}</a>
+        </li>
+    </ul>
+</div>
+<h3 class="page-title">
+    <small></small>
+</h3>
+<div class="row" ng-form="bigform">
+    <div class="col-md-12" >
+        <div class="portlet light bordered ">
+            <div class="portlet-body">
+                <div class="row">
+                    <!-- 组织机构树 start -->
+                    <div class="col-md-4">
+                        <div class="portlet light">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-cogs font-green-sharp"></i>
+                                    <span class="caption-subject font-green-sharp bold uppercase">应用菜单</span>
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:;" class="reload" ng-click="reload()">
+                                    </a>
+                                </div>
+                            </div>
+                            <label class="control-label col-md-4"> 选择应用: </label>
+                            <div class="col-md-5">
+                                <select class="form-control"  name="select_app"  ng-model="menu.appselect">
+                                    <!-- 渲染，不能绑定同一个，不然每次点击，都会改变，重新渲染，所以ng-model绑定和渲染必须不同-->
+                                    <option ng-repeat="d in menu.appselectApp" value="{{d.guid}}">{{d.appName}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" name="back"  class="btn btn-primary"    popover-trigger="mouseenter" ng-click="menu.search(menu)" > 查询
+                                </button>
+                            </div>
+                            <div class="portlet-body"  ng-show="menushow">
+                                <div class="shu" style="margin-top: 20px;">
+                                    <form id="s">
+                                        <input type="search" ng-model="searchitem" id="q"/>
+                                        <button type="submit" ng-click="menu.clear()">清空</button>
+                                    </form>
+                                    <div id="container"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 组织机构树 end -->
+                    <!--右侧结构-->
+                    <div class="col-md-8" ng-if="menu.show">
+                        <div class="portlet light portlet-fit portlet-datatable bordered"  ng-if='menu.menusearch'>
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-shopping-cart"></i> 菜单详细信息 </div>
+                            </div>
+                            <div class="portlet-body" style="min-height:500px; height: 100%" >
+                                <form action="#" name="menuform" class="form-horizontal ">
+                                    <div class="form-body ">
+                                        <div class="col-md-6" >
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">菜单名称:<span ng-class="{required:menuform.dict_key.$invalid}"  > * </span></label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control"
+                                                           ng-model="menuFrom.menuName"
+                                                           name="dict_key" ng-disabled="!editflag" required/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" >
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4"> 菜单显示名称:<span ng-class="{required:menuform.dict_key1.$invalid}"  > * </span></label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control"
+                                                           ng-model="menuFrom.menuLabel"
+                                                           name="dict_key1" ng-disabled="!editflag" required/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">菜单显示图标</label>
+                                                <div class="col-md-8">
+                                                    <span class="col-md-3">
+                                                        <span class="input-group-btn">
+                                                         <ui-iconpicker groups="font-awesome" style="position: relative" ng-model="menuFrom.imagePath" value="{{menuFrom.imagePath}}"></ui-iconpicker>
+                                                        </span>
+                                                    </span>
+                                                    <span class="col-md-9">
+                                                        <input class="form-control" type="text" disabled ng-model="menuFrom.imagePath" />
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" >
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">菜单代码:<span ng-class="{required:menuform.dict_key001.$invalid}"  > * </span></label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control"
+                                                           ng-model="menuFrom.menuCode"
+                                                           name="dict_key001" ng-disabled="!editflag" required/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" ng-if="isleaftrue">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">是否叶子菜单</label>
+                                                <div class="col-md-8">
+                                                    <!--<input type="text" class="form-control"  translate-constants comtable="DICT_YON"-->
+                                                    <input type="text" class="form-control"  translate-constants comtable="DICT_YON"
+                                                           ng-model="menuFrom.isleaf"
+                                                            ng-disabled="!editflag"  ng-readonly="!isleaf"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" ng-if="!isleaftrue">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">是否叶子菜单:<span ng-class="{required:menuform.dict_key3.$invalid}"  > * </span></label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control"  name="dict_key3"   ng-model="menuFrom.isleaf"  translate-constants comtable="DICT_YON"  ng-readonly="!sdasd"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6"  ng-if="selectfunc">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4">选择功能:<span ng-class="{required:myform.dict_func.$invalid}"  > * </span></label>
+                                                <div class="col-md-7">
+                                                    <input type="text" class="form-control" placeholder=""
+                                                           ng-model="menuFrom.guidFunc"  required    ng-disabled="true"
+                                                           name="dict_func" />
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <span style="margin-top:10px; margin-left:-5px;cursor: pointer" class="icon-magnifier-add"  ng-click="selectfuncs()"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" >
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">ui入口</label>
+                                                <div class="col-md-8 col-md-offset-1">
+                                                    <input type="text" class="form-control"
+                                                           ng-model="menuFrom.uiEntry"
+                                                           name="id" ng-disabled="!editflag"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2"></label>
+                                                <div class="col-md-10">
+                                                    <div class="actions btn-set" style="text-align: center;" ng-if="!editflag">
+                                                        <button type="button" name="back" class="btn btn-primary" style="float: right;" ng-click="menu.menuEdit(menuFrom)"> 编辑信息
+                                                        </button>
+                                                        <button type="button" name="back" class="btn  btn-danger" style="float: right;margin-right:10px;"  ng-click="menu.histroy()"> 查看概况
+                                                        </button>
+                                                        <!--  去掉，统一在右侧树上修改 -->
+                                                        <!--<button type="button" name="back" class="btn btn-primary" ng-disabled="testussef" ng-click="menu.childAdd(menuFrom)">增加子菜单
+                                                        </button>-->
+                                                    </div>
+                                                    <div class="actions btn-set" style="text-align: center" ng-if="editflag">
+                                                        <button type="button" name="back"  class="btn btn-primary" ng-if="menuform.$invalid == false"  ng-disabled="menuform.$invalid" popover-trigger="mouseenter" ng-click="menu.save(menuFrom)" > 保存
+                                                        </button>
+                                                        <button type="button" name="back" class="btn default" ng-if="menuform.$invalid == true"  ng-disabled="menuform.$invalid" popover-trigger="mouseenter" > 保存
+                                                        </button>
+                                                        <button type="button" name="back" class="btn btn-danger" ng-click="menu.cenel(menuFrom)"> 取消
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>

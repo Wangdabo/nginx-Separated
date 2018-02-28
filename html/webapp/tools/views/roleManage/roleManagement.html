@@ -1,0 +1,65 @@
+*/<!--角色管理-->
+<div class="page-bar ng-scope" style="border-bottom: 1px solid #e7ecf1;">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="#">权限</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <a href="#">角色管理</a>
+        </li>
+        <li>
+            {{datase}}
+        </li>
+    </ul>
+</div>
+<h3 class="page-title">
+    <small></small>
+</h3>
+
+<div class="row" ng-form="bigform">
+    <div class="col-md-12" >
+        <div class="portlet light bordered ">
+            <div class="portlet-body">
+                <div class="row">
+                    <!-- 组织机构树 start -->
+                    <div class="col-md-12">
+                        <div class="portlet light" >
+                            <!--<div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-cogs font-green-sharp"></i>
+                                    <span class="caption-subject font-green-sharp bold uppercase">角色查询条件</span>
+                                </div>
+                            </div>-->
+                            <div class="portlet-body">
+                                <div fun-active="/AcRoleController/queryRoleList">
+                                    <div ui-grid="gridOptions"  class="grid"
+                                         ui-grid-pagination ui-grid-exporter
+                                         ui-grid-selection ui-grid-resize-columns>
+                                    </div>
+                                </div>
+                                <div class="actions btn-set" style="float: right; margin-top:12px;">
+                                    <button type="button" name="back" class="btn btn-primary" fun-active="/AcRoleController/createRole" ng-click="role_add()"> 新增
+                                    </button>
+                                    <button type="button" name="back" class="btn btn-primary" fun-active="/AcRoleController/editRole" ng-click="role_edit(4)">  修改
+                                    </button>
+                                    <button type="button" name="back" class="btn btn-danger" fun-active="/AcRoleController/deleteRole" ng-click="role_delete()"> 删除
+                                    </button>
+                                    <button type="button" name="back" class="btn btn-danger" fun-active="/OperateLogController/queryOperateHistoryList" ng-click="role_history()"> 查看概况
+                                    </button>
+                                    <button type="button" name="back" class="btn btn-danger" fun-active="/AcRoleController/queryRoleList"  ng-disabled="!rolePer" ng-click="role_Permission()"> 角色权限配置
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 组织机构树 end -->
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+
+
+
